@@ -1,6 +1,53 @@
+<div align="center">
+
 # Tailnet Manager
 
-Dark-mode macOS control panel for the machines you actually use — RDP boxes, SSH servers, or both — with Tailscale-aware status LEDs.
+**A native macOS control room for every machine on your Tailscale network.**
+Live topology, SSH and RDP in tabs, sudo passwords behind Touch ID, server webhooks, cloud transfers, and Claude / Codex agents locked to ssh. Everything is kept in one encrypted vault.
+
+[![macOS 14+](https://img.shields.io/badge/macOS-14%2B-000000?logo=apple&logoColor=white)](#install)
+[![Swift 6](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](Package.swift)
+[![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-0A84FF?logo=swift&logoColor=white)](Sources/TailnetCore)
+[![Tailscale](https://img.shields.io/badge/Tailscale-aware-242424?logo=tailscale&logoColor=white)](https://tailscale.com)
+[![AES-256-GCM vault](https://img.shields.io/badge/vault-AES--256--GCM-2EA043?logo=letsencrypt&logoColor=white)](#security-model)
+[![Touch ID](https://img.shields.io/badge/secrets-Touch%20ID-8E8E93?logo=apple&logoColor=white)](#passwords-sudo--root)
+[![Claude · Codex · Cline](https://img.shields.io/badge/agents-Claude%20%C2%B7%20Codex%20%C2%B7%20Cline-D97757?logo=anthropic&logoColor=white)](#orchestrate-claude-on-your-machines-one-login)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
+
+[![GitHub stars](https://img.shields.io/github/stars/xorroproprop/tailscale-manager?style=social)](https://github.com/xorroproprop/tailscale-manager/stargazers)
+[![Follow @xorroproprop](https://img.shields.io/github/followers/xorroproprop?label=Follow&style=social)](https://github.com/xorroproprop)
+
+<img src="docs/screenshot.png" alt="Tailnet Manager overview: 14 machines in Production, Staging, CI and Homelab folders arranged around the Tailscale hub, with direct and DERP-relayed links" width="900">
+
+<sub>The Overview: your machines grouped by folder around the Tailscale hub. Solid lines are direct connections, dashed lines are DERP relays, and moving dots show live traffic. Demo data.</sub>
+
+</div>
+
+## Why Tailnet Manager
+
+| | |
+|---|---|
+| 🛰️ **See your tailnet** | Live topology with direct vs. relayed paths, online LEDs, exit-node switching (your own nodes or any Mullvad city). |
+| 🖥️ **Connect in one click** | Embedded terminal tabs per machine (Ghostty look and keys), RDP, htop and custom presets. Nothing connects until you ask. |
+| 🔑 **Sudo without typing** | ⌘⇧P types a saved password into a real prompt after Touch ID. It never goes through the clipboard and never lands in shell history. |
+| 🔔 **Pipelines** | Servers POST job events over tailnet-only HTTPS. Failures and silent jobs turn red in the sidebar and on the Dock icon. |
+| 🤖 **Orchestrate** | Claude Code, Codex or z.ai run tasks on the machines you pick. A hook restricts them to exact `ssh` lines and nothing else. |
+| ☁️ **Cloud** | Live rclone / gcloud storage / gsutil transfers with % and ETA. Define rclone remotes once and deploy them with secrets sent over stdin. |
+| 🔒 **Private by design** | One AES-256-GCM vault with its key in your Keychain. No account, and nothing about your machines built into the app. |
+
+## Quick start
+
+```sh
+git clone https://github.com/xorroproprop/tailscale-manager.git
+cd tailscale-manager
+./install.sh        # builds, installs to ~/Applications, records your PATH / ssh agent
+```
+
+Requires macOS 14+ and Swift 6 (Xcode 16 or `xcode-select --install`). Tailscale is optional but powers the live status. Details: [Install](#install).
+
+If it's useful to you, a ⭐ helps other people find it.
+
+---
 
 ## Layout
 
